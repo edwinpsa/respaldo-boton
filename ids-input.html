@@ -1,0 +1,51 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="ids-input">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <input type="[[typeInput]]" on-input="disparooninput" name="[[name]]">
+  <slot></slot>
+  </template>
+
+  <script>
+    /**
+     * `ids-input`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class IdsInput extends Polymer.Element {
+      static get is() { return 'ids-input'; }
+      static get properties() {
+        return {
+          typeInput: {
+            type: String,
+            value: 'texto'
+          },
+          name: {
+            type: String,
+            value: 'nombreinput'
+          }
+        };
+      }
+
+      disparooninput(event) {
+        let valorinput=event.path[0].value;
+        const myEvent = new CustomEvent('mi-custom-event', {
+              detail: { value: valorinput, name: this.name},
+              bubbles: true,
+              composed: true
+            });
+        this.dispatchEvent(myEvent);
+      }
+    }
+
+    window.customElements.define(IdsInput.is, IdsInput);
+  </script>
+</dom-module>
